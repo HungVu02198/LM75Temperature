@@ -8,11 +8,6 @@ using System.Windows.Threading;
 using System.IO.Ports;
 using ZedGraph;
 using Microsoft.Office.Interop.Excel;
-using NPOI.Util;
-using System.Net;
-using System.Text;
-using System.IO;
-using Newtonsoft.Json;
 
 using FireSharp.Config;
 using FireSharp.Interfaces;
@@ -60,7 +55,6 @@ namespace LM75_Desktop
         // 3 bit thấp
         int number2;
 
-        #region ChartInfo
         // Biểu đồ hiển thị biến đổi nhiệt độ
         GraphPane myPane;
         GraphPane myPane1;
@@ -77,7 +71,6 @@ namespace LM75_Desktop
         int count = 0;
         Boolean isStopView = false;
         double randomTem = 0;
-        #endregion
         #endregion
 
         #region Methods
@@ -122,8 +115,6 @@ namespace LM75_Desktop
         {
             SerialPort sp = (SerialPort)sender;
             int indata = sp.ReadByte();
-            Console.WriteLine($"{indata:X}");
-
             if (indata == POINT_TEPORATURE_1_BIT_INDEX || indata == POINT_TEPORATURE_2_BIT_INDEX)
             {
                 state = 0;
@@ -151,8 +142,6 @@ namespace LM75_Desktop
                     newTemperatureInfo.temperaturePoint2 = getPointTemperature(2);
                     addTemperature();
                     this.count++;
-                    //textBox5.Text = newTemperatureInfo.temperaturePoint1.ToString();
-                    //textBox5.Text = newTemperatureInfo.temperaturePoint2.ToString();
                 }
                 return;
             }
@@ -178,7 +167,6 @@ namespace LM75_Desktop
         {
             if (!isStopView) {
                 timeSeconds = (double)(timeSeconds + 0.2);
-                getRandom();
                 setRealTimeChart();
             }
             UpdateTextBox("");
@@ -196,7 +184,7 @@ namespace LM75_Desktop
                 this.Invoke(new Action<string>(UpdateTextBox), new object[] { value });
                 return;
             }
-            textBox5.Text = newTemperatureInfo.temperaturePoint1.ToString(); ;
+            textBox5.Text = newTemperatureInfo.temperaturePoint1.ToString();
             textBox6.Text = newTemperatureInfo.temperaturePoint2.ToString();
         }
 
@@ -214,19 +202,11 @@ namespace LM75_Desktop
             zedGraphControl.GraphPane.CurveList.Clear();
             zedGraphControl.AxisChange();
             zedGraphControl.Invalidate();
-            listPoint.Add(timeSeconds, temperature + this.randomTem);
-            graphPane.AddCurve("Điểm đo ", listPoint, Color.Red, SymbolType.None);
+            listPoint.Add(timeSeconds, temperature);
+            graphPane.AddCurve("Điểm đo ", listPoint, Color.Red, SymbolType.Diamond);
+
             zedGraphControl.AxisChange();
             zedGraphControl.Invalidate();
-        }
-
-        // Tạo Random biến
-        private void getRandom()
-        {
-            //Random random = new Random();
-            //if (random.Next(0, 4) % 2 == 0) this.randomTem = random.NextDouble();
-            //else this.randomTem = random.NextDouble();
-            this.randomTem = 0;
         }
         #endregion
 
@@ -314,35 +294,6 @@ namespace LM75_Desktop
         }
 
         /// <summary>
-        /// Lưu dữ liệu danh sách điểm đo
-        /// </summary>
-        private void button6_Click(object sender, EventArgs e)
-        {
-            System.Data.DataTable tableExcel = new System.Data.DataTable("TemperatureInfo");
-
-            tableExcel.Columns.Add("Time", typeof(string));
-            tableExcel.Columns.Add("Point_1", typeof(double));
-            tableExcel.Columns.Add("Point_2", typeof(double));
-
-            for (int i = 0; i < lstTemperatureInfo.Count; i++)
-            {
-                TemperatureInfo temperature = lstTemperatureInfo[i];
-                var newRow = tableExcel.NewRow();
-                newRow[0] = temperature.timeReceived;
-                newRow[1] = temperature.temperaturePoint1;
-                newRow[2] = temperature.temperaturePoint2;
-                tableExcel.Rows.Add(newRow);
-            }
-            Workbook workbook = new Workbook();
-            var worksheet = workbook.Worksheets.Add("Thông tin điểm đo");
-
-            worksheet.Cell("A1").InsertData(tableExcel);
-
-            worksheet.Columns().AutoFitContents();
-            workbook.Save();
-        }
-
-        /// <summary>
         /// Hiển thị danh sách kết quả đo
         /// </summary>
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -370,9 +321,7 @@ namespace LM75_Desktop
             item1.SubItems.Add(temperature.timeReceived);
             item1.SubItems.Add(temperature.temperaturePoint1.ToString());
             item1.SubItems.Add(temperature.temperaturePoint2.ToString());
-            Console.WriteLine(temperature.timeReceived);
             listView1.Items.Add(item1);
-            Console.WriteLine(listView1);
         }
 
 
@@ -457,69 +406,6 @@ namespace LM75_Desktop
             textBox3.Visible = false;
             button8.Visible = false;
             button9.Visible = false;
-        }
-
-        /// <summary>
-        /// Event thay đổi biểu đồ 1
-        /// </summary>
-        private void zedGraphControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Event thay đổi biểu đồ 2
-        /// </summary>
-        private void zedGraphControl1_Load(object sender, EventArgs e)
-        {
-
-        }
-        #endregion
-
-        #region TextField
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
         }
         #endregion
         #endregion

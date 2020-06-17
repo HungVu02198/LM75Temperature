@@ -44,6 +44,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -54,8 +56,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.zedGraphControl = new ZedGraph.ZedGraphControl();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +115,6 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cài đặt";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // textBox3
             // 
@@ -127,7 +126,6 @@
             this.textBox3.Text = "9600";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox3.Visible = false;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // button8
             // 
@@ -159,7 +157,6 @@
             this.textBox2.Text = "COM10";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox2.Visible = false;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // button7
             // 
@@ -255,15 +252,31 @@
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Thông tin";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(21, 95);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(85, 23);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Điểm đo 2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(21, 58);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(85, 23);
+            this.button10.TabIndex = 12;
+            this.button10.Text = "Điểm đo 1";
+            this.button10.UseVisualStyleBackColor = true;
             // 
             // textBox6
             // 
             this.textBox6.Location = new System.Drawing.Point(147, 95);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(83, 20);
+            this.textBox6.Size = new System.Drawing.Size(85, 20);
             this.textBox6.TabIndex = 11;
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // textBox5
             // 
@@ -271,7 +284,6 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(85, 20);
             this.textBox5.TabIndex = 10;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // listView1
             // 
@@ -342,7 +354,6 @@
             this.zedGraphControl.Size = new System.Drawing.Size(608, 323);
             this.zedGraphControl.TabIndex = 11;
             this.zedGraphControl.UseExtendedPrintDialog = true;
-            this.zedGraphControl.Load += new System.EventHandler(this.zedGraphControl_Load);
             // 
             // zedGraphControl1
             // 
@@ -361,25 +372,6 @@
             this.zedGraphControl1.Size = new System.Drawing.Size(608, 310);
             this.zedGraphControl1.TabIndex = 21;
             this.zedGraphControl1.UseExtendedPrintDialog = true;
-            this.zedGraphControl1.Load += new System.EventHandler(this.zedGraphControl1_Load);
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(21, 58);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(85, 23);
-            this.button10.TabIndex = 12;
-            this.button10.Text = "Điểm đo 1";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(21, 95);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Điểm đo 2";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
