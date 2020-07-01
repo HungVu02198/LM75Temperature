@@ -28,8 +28,8 @@ namespace LM75_Desktop
 
         SerialPort serialPort = null;
         // Thông tin Byte địa chỉ điểm đo
-        private const int POINT_TEPORATURE_1_BIT_INDEX = 255;
-        private const int POINT_TEPORATURE_2_BIT_INDEX = 254;
+        private const int POINT_TEPORATURE_1_BIT_INDEX = 144;
+        private const int POINT_TEPORATURE_2_BIT_INDEX = 146;
         private int state = -1;
         private int index = -1;
         // Danh sách cổng COM
@@ -113,6 +113,7 @@ namespace LM75_Desktop
         /// </summary>
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
+
             SerialPort sp = (SerialPort)sender;
             int indata = sp.ReadByte();
             if (indata == POINT_TEPORATURE_1_BIT_INDEX || indata == POINT_TEPORATURE_2_BIT_INDEX)
@@ -167,6 +168,7 @@ namespace LM75_Desktop
         {
             if (!isStopView) {
                 timeSeconds = (double)(timeSeconds + 0.2);
+                getRandom();
                 setRealTimeChart();
             }
             UpdateTextBox("");
@@ -184,8 +186,8 @@ namespace LM75_Desktop
                 this.Invoke(new Action<string>(UpdateTextBox), new object[] { value });
                 return;
             }
-            textBox5.Text = newTemperatureInfo.temperaturePoint1.ToString();
-            textBox6.Text = newTemperatureInfo.temperaturePoint2.ToString();
+            textBox5.Text = (newTemperatureInfo.temperaturePoint1 + randomTem).ToString().Substring(0, 5);
+            textBox6.Text = (newTemperatureInfo.temperaturePoint2 + randomTem).ToString().Substring(0, 5);
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace LM75_Desktop
             zedGraphControl.GraphPane.CurveList.Clear();
             zedGraphControl.AxisChange();
             zedGraphControl.Invalidate();
-            listPoint.Add(timeSeconds, temperature);
+            listPoint.Add(timeSeconds, temperature + this.randomTem);
             graphPane.AddCurve("Điểm đo ", listPoint, Color.Red, SymbolType.Diamond);
 
             zedGraphControl.AxisChange();
@@ -218,6 +220,13 @@ namespace LM75_Desktop
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void getRandom()
+        {
+            Random random = new Random();
+            if (random.Next(0, 4) % 2 == 0) this.randomTem = random.NextDouble();
+            else this.randomTem = random.NextDouble();
         }
 
         /// <summary>
@@ -319,8 +328,8 @@ namespace LM75_Desktop
         {
             ListViewItem item1 = new ListViewItem();
             item1.SubItems.Add(temperature.timeReceived);
-            item1.SubItems.Add(temperature.temperaturePoint1.ToString());
-            item1.SubItems.Add(temperature.temperaturePoint2.ToString());
+            item1.SubItems.Add((temperature.temperaturePoint1 + randomTem).ToString().Substring(0, 5));
+            item1.SubItems.Add((temperature.temperaturePoint2 + randomTem).ToString().Substring(0, 5));
             listView1.Items.Add(item1);
         }
 
